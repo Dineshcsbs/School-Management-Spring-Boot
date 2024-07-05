@@ -17,22 +17,21 @@ public class UserService {
     private UserRepository userRepository;
 
     public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
+    	final List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);
         return users;
     }
 
-    public User findByEmail(String email) {
-//        Optional<User> optionalUser = userRepository.findByEmail(email);
-    	User user=userRepository.findByEmail(email).orElseThrow(() -> new BadRequestServiceAlertException("User not found with email: " + email));
+    public User findByEmail(final String email) {
+    	final User user=userRepository.findByEmail(email).orElseThrow(() -> new BadRequestServiceAlertException(400,"User not found with email: " + email));
         return user;
     }
 
-    public User saveUser(User user) {
+    public User saveUser(final User user) {
         return userRepository.save(user);
     }
 
-    public void deleteUser(Long userId) {
+    public void deleteUser(final Long userId) {
         userRepository.deleteById(userId);
     }
 }

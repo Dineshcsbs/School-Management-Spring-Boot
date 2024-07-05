@@ -33,28 +33,36 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+    public <T> T extractClaim(final String token, final Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
+        /*Claims claims=null;
+        try {
+        claims= extractAllClaims(token);
+        }
+        catch(Exception e) {
+        	throw new BadRequestServiceAlertException("user not found");
+        }
+        */
     }
 
    
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(final UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    public String generateRefreshToken(UserDetails userDetails) {
+    public String generateRefreshToken(final UserDetails userDetails) {
         return generateRefreshToken(new HashMap<>(), userDetails);
     }
 
-    private String generateRefreshToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-    	User user = (User) userDetails;
+    private String generateRefreshToken(final Map<String, Object> extraClaims, final UserDetails userDetails) {
+    	final User user = (User) userDetails;
         extraClaims.put("role", user.getRole());
         return buildRefreshToken(extraClaims, userDetails, tokenExpiration);
     }
 
-    private String buildRefreshToken(Map<String, Object> extraClaims, UserDetails userDetails, Long tokenExpiration) {
+    private String buildRefreshToken(final Map<String, Object> extraClaims, final UserDetails userDetails, final Long tokenExpiration) {
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
@@ -64,8 +72,8 @@ public class JwtService {
                 .compact();
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-    	User user = (User) userDetails;
+    public String generateToken(final Map<String, Object> extraClaims, final UserDetails userDetails) {
+    	final User user = (User) userDetails;
         extraClaims.put("role", user.getRole());
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
@@ -74,7 +82,7 @@ public class JwtService {
         return jwtExpiration;
     }
 
-    private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, Long expiration) {
+    private String buildToken(final Map<String, Object> extraClaims, final UserDetails userDetails, final Long expiration) {
  
         return Jwts.builder()
                 .setClaims(extraClaims)
@@ -85,20 +93,20 @@ public class JwtService {
                 .compact();
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails) {
+    public boolean isTokenValid(final String token, final UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
-    private boolean isTokenExpired(String token) {
+    private boolean isTokenExpired(final String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    private Date extractExpiration(String token) {
+    private Date extractExpiration(final String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    private Claims extractAllClaims(String token) {
+    private Claims extractAllClaims(final String token) {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSignInKey())
@@ -108,7 +116,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+    	final byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }

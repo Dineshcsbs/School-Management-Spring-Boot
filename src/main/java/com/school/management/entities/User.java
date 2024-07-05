@@ -45,10 +45,6 @@ public class User implements UserDetails {
 
     @ManyToOne
     private Role role;
-    
-//    @Column(nullable = false)
-//    @ManyToOne
-//    private School school;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

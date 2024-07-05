@@ -27,13 +27,13 @@ public class QuestionController {
 	@PostMapping("/create")
 	@PreAuthorize("hasAnyAuthority('TUTOR')")
 	public Question createQuestion(@RequestBody Question question) {
-		return questionService.createQuestion(question);
+		return this.questionService.createQuestion(question);
 	}
 
 	@GetMapping("/{id}")
 	@PreAuthorize("hasAnyAuthority('TUTOR')")
 	public List<QuestionDTO> displayQuestion(@PathVariable Long id){
-		return questionService.displayQuestion(id);
+		return this.questionService.displayQuestion(id);
 	}
 
 	@GetMapping("/page")
@@ -41,6 +41,6 @@ public class QuestionController {
 	public List<QuestionDTO> pageConcept(@RequestParam(defaultValue="0") int  pageNo,@RequestParam(defaultValue="6") int pageSize,
 			@RequestParam(defaultValue="id")String fieldName,@RequestParam(defaultValue="ASC")Direction direction,
 			@RequestParam Long courseId){
-		return questionService.pageConcept(pageNo,pageSize,fieldName, direction,courseId);
+		return this.questionService.pageConcept(pageNo,pageSize,fieldName, direction,courseId);
 	}
 }

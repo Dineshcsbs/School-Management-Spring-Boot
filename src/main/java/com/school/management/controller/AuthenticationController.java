@@ -1,7 +1,6 @@
 package com.school.management.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,43 +31,42 @@ public class AuthenticationController {
 
     @PostMapping("/admin-signup")
     public User adminSignUp(@RequestBody RegisterUserDto registerUserDto) {
-        return authenticationService.signup(registerUserDto,1L);
+        return this.authenticationService.signup(registerUserDto,1L);
     }
 
     @PostMapping("/tutor-signup")
     public User studentSignUp(@RequestBody RegisterUserDto registerUserDto) {
-        return authenticationService.signup(registerUserDto,2L);
+        return this.authenticationService.signup(registerUserDto,2L);
     }
     
     @PostMapping("/student-signup")
     public User tutorSignUp(@RequestBody RegisterUserDto registerUserDto) {
-        return  authenticationService.signup(registerUserDto,3L);
+        return  this.authenticationService.signup(registerUserDto,3L);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) throws Exception {
-        User authenticatedUser = authenticationService.authenticate(loginUserDto);
+    public LoginResponse authenticate(@RequestBody LoginUserDto loginUserDto) throws Exception {
+        final User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
-        String jwtToken = jwtService.generateToken(authenticatedUser);
-        String refreshToken = jwtService.generateRefreshToken(authenticatedUser);
+        final String jwtToken = jwtService.generateToken(authenticatedUser);
+        final String refreshToken = jwtService.generateRefreshToken(authenticatedUser);
 
-        LoginResponse loginResponse = LoginResponse.builder()
-            .expiresIn(jwtService.getExpirationTime())
+        final LoginResponse loginResponse = LoginResponse.builder()
             .token(jwtToken)
             .refreshToken(refreshToken)
             .build();
 
-        return ResponseEntity.ok(loginResponse);
+        return loginResponse;
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<RefreshTokenResponse> refreshToken(@RequestBody RefreshTokenDto refreshTokenDto) {
-        User user = userService.findByEmail(jwtService.extractUsername(refreshTokenDto.getToken()));
-        String jwtToken = jwtService.generateToken(user);
+    public RefreshTokenResponse refreshToken(@RequestBody RefreshTokenDto refreshTokenDto) {
+        final User user = userService.findByEmail(jwtService.extractUsername(refreshTokenDto.getToken()));
+        final String jwtToken = jwtService.generateToken(user);
 
-        RefreshTokenResponse loginResponse = RefreshTokenResponse.builder()
+        final RefreshTokenResponse loginResponse = RefreshTokenResponse.builder()
             .accessToken(jwtToken)
             .build();
-        return ResponseEntity.ok(loginResponse);
+        return loginResponse;
     }
 }

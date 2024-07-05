@@ -17,18 +17,18 @@ public class StudentCourseService {
 
 	@Autowired
 	private StudentCourseRepository studentCourseRepository;
-	public StudentCourse createRecord(StudentCourse studentCourse) {
+	public StudentCourse createRecord(final StudentCourse studentCourse) {
 		return studentCourseRepository.save(studentCourse);
 	}
-	public List<StudentCourse> assignCourseToStudent(Long id) {
+	public List<StudentCourse> assignCourseToStudent(final Long id) {
 		
 		return studentCourseRepository.findAllByStudentId(id);
 	}
 
-	public Map<String,Object> deleteByStudentCourse(Long studentId, Long courseId) {
+	public Map<String,Object> deleteByStudentCourse(final Long studentId, final Long courseId) {
         
-		Map<String,Object> responce=new HashMap<>();
-		StudentCourse student=studentCourseRepository.findByStudentIdAndCourseId(studentId, courseId);
+		final Map<String,Object> responce=new HashMap<>();
+		final StudentCourse student=studentCourseRepository.findByStudentIdAndCourseId(studentId, courseId);
 		if(student.getId()!=null) {
 			studentCourseRepository.deleteById(student.getId());
 			responce.put("Id Successfully Delete ", courseId);

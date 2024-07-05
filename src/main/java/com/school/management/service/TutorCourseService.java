@@ -14,14 +14,14 @@ public class TutorCourseService {
 
 	@Autowired
 	private TutorCourseRepository tutorCourseRepository;
-	public TutorCourse createRecord(TutorCourse tutorCourse) {
+	public TutorCourse createRecord(final TutorCourse tutorCourse) {
 		return tutorCourseRepository.save(tutorCourse);
 	}
 
 	//delete a value
-	public Map<String,Object> deleteByIdRecord(Long id){
-		Map<String,Object> responce=new HashMap<>();
-		boolean ifIdExit=tutorCourseRepository.existsById(id);
+	public Map<String,Object> deleteByIdRecord(final Long id){
+		final Map<String,Object> responce=new HashMap<>();
+		final boolean ifIdExit=tutorCourseRepository.existsById(id);
 		if(ifIdExit) {
 			tutorCourseRepository.deleteById(id);
 			responce.put("Id Successfully Delete ", id);

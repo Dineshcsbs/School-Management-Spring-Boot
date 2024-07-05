@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,16 +27,20 @@ public class StudentController {
 
 	@PutMapping("/update")
 	public Student updateStudent(@RequestBody Student student, @RequestHeader("Authorization") String token) {
-//		String token = (request.getHeader("Authorization")).substring(7);
-
-		return studentService.updateStudent(token.substring(7), student);
+		return this.studentService.updateStudent(token.substring(7), student);
 	}
 
 	@GetMapping("/search")
 	public List<StudentDTO> searchData(@RequestParam(defaultValue = "0") int offSet,
 			@RequestParam(defaultValue = "5") int pageSize, @RequestParam(defaultValue = "id") String fieldName,
 			@RequestParam(defaultValue = "ASC") Direction direction, @RequestParam String searchKeyWord) {
-		return studentService.searchData(offSet, pageSize, fieldName, direction, searchKeyWord);
+		return this.studentService.searchData(offSet, pageSize, fieldName, direction, searchKeyWord);
 	}
+	
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@DeleteMapping("/")
+	public String deleteByStudent(@RequestParam String email) {
+		 return studentService.deleteByStudent(email);
+	 }
 
 }

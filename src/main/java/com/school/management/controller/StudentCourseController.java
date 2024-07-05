@@ -28,18 +28,18 @@ public class StudentCourseController {
 	@PostMapping("/")
 	@PreAuthorize("hasAnyAuthority('ADMIN','TUTOR','STUDENT')")
 	public StudentCourse createRecord(@RequestBody StudentCourse studentCourse) {
-		return studentCourseService.createRecord(studentCourse);
+		return this.studentCourseService.createRecord(studentCourse);
 	}
 	
 	@GetMapping("/{id}")
 	@PreAuthorize("hasAnyAuthority('ADMIN','TUTOR','STUDENT')")
 	public List<StudentCourse> assignCourseToStudent(@PathVariable Long studentId){
-		return studentCourseService.assignCourseToStudent(studentId);
+		return this.studentCourseService.assignCourseToStudent(studentId);
 	}
 	
 	@DeleteMapping("/delete/{id}")
 	@PreAuthorize("hasAnyAuthority('ADMIN','TUTOR')")
 	public Map<String,Object> deleteByIdRecord(@RequestParam Long studentId,@RequestParam Long courseId){
-		return studentCourseService.deleteByStudentCourse(studentId,courseId);
+		return this.studentCourseService.deleteByStudentCourse(studentId,courseId);
 	}
 }

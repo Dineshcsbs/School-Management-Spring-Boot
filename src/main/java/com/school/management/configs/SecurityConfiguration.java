@@ -29,10 +29,10 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(request -> request
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/role/**").hasAnyAuthority("ADMIN")
+                .requestMatchers("/api/role/**").hasAuthority("ADMIN")
                 .requestMatchers("/api/admin/**").hasAnyAuthority("ADMIN")
                 .requestMatchers("/api/student/**").hasAnyAuthority("STUDENT","TUTOR", "ADMIN")
-                .requestMatchers("/api/tutor/**").hasAnyAuthority("Tutor","ADMIN")
+                .requestMatchers("/api/tutor/**").hasAnyAuthority("TUTOR","ADMIN")
                 .requestMatchers("/api/course/**").authenticated()
                 .requestMatchers("/api/question/**").authenticated()
                 .requestMatchers("/api/student-answer/**").authenticated()

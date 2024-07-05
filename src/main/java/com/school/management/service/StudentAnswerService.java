@@ -16,13 +16,13 @@ public class StudentAnswerService {
 	private StudentAnswerRepository studentAnswerRepository;
 	
 	
-	public StudentAnswer studentAnswer(StudentAnswer studentAnswer) {
+	public StudentAnswer studentAnswer(final StudentAnswer studentAnswer) {
 		
 		return studentAnswerRepository.save(studentAnswer);
 	}
 
 
-	public List<StudentAnswer> retriveStudentAns(Long studentId, Long courseId) {
+	public List<StudentAnswer> retriveStudentAns(final Long studentId, final Long courseId) {
 		return studentAnswerRepository.searchStudentAnswer(studentId,courseId);
 	}
 

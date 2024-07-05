@@ -18,7 +18,6 @@ import com.school.management.service.CourseService;
 
 @RestController
 @RequestMapping("/api/course")
-//@EnableMethodSecurity
 public class CourseController {
 
 
@@ -28,20 +27,20 @@ public class CourseController {
 	@PostMapping("/")
 	@PreAuthorize("hasAnyAuthority('ADMIN')")
 	public Course createRecord(@RequestBody Course course) {
-		return courseService.createRecord(course);
+		return this.courseService.createRecord(course);
 	}
 	
 	@GetMapping("/{courseId}")
 	@PreAuthorize("hasAnyAuthority('ADMIN','TUTOR','STUDENT')")
 	public Course getCourseName(@PathVariable Long courseId) {
-		return courseService.getCourseName(courseId);
+		return this.courseService.getCourseName(courseId);
 	}
 	
 	
-	@DeleteMapping("/delete/{courseId}")
+	@DeleteMapping("/{courseId}")
 	@PreAuthorize("hasAnyAuthority('ADMIN')")
 	public Map<String,Object> deleteById(@PathVariable Long courseId){
-		return courseService.deleteByIdRecord(courseId);
+		return this.courseService.deleteByIdRecord(courseId);
 	}
 	
 }

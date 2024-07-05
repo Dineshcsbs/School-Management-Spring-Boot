@@ -8,5 +8,7 @@ import com.school.management.entities.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
+
+	Role findByRoleType(String role);
 	
 }

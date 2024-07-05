@@ -1,5 +1,7 @@
 package com.school.management.dto;
 
+import java.util.Date;
+
 import org.springframework.lang.Nullable;
 
 import lombok.AllArgsConstructor;
@@ -13,8 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ErrorDetailDto {
 
+	@Nullable
     private int status;
-
+	@Nullable
+    private String message;
     @Nullable
-    private String detail;
+    private Date stamp;
+    @Nullable
+    private String description;
+    
 }

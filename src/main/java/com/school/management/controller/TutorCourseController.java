@@ -25,13 +25,13 @@ public class TutorCourseController {
 	@PostMapping("/")
 	@PreAuthorize("hasAnyAuthority('TUTOR','ADMIN')")
 	public TutorCourse createrecord(@RequestBody TutorCourse tutorCourse) {
-		return tutorCourseService.createRecord(tutorCourse);
+		return this.tutorCourseService.createRecord(tutorCourse);
 	}
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	@PreAuthorize("hasAnyAuthority('ADMIN')")
 	public Map<String,Object> deleteByIdRecord(@PathVariable Long id){
-		return tutorCourseService.deleteByIdRecord(id);
+		return this.tutorCourseService.deleteByIdRecord(id);
 	}
 
 }

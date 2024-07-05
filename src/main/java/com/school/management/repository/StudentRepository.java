@@ -24,7 +24,7 @@ public interface StudentRepository extends JpaRepository<Student, Long>{
 		       "s.address LIKE %:search% OR " +
 		       "s.email LIKE %:search% OR " +
 		       "school.name LIKE %:search%")
-		Page<Student> searchStudents(@Param("search") String search, Pageable pageable);
+	Page<Student> searchStudents(@Param("search") String search, Pageable pageable);
 
 
 }

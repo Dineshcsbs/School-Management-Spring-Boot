@@ -24,12 +24,12 @@ public class StudentAnswerController {
 	@PostMapping("/")
 	@PreAuthorize("hasAnyAuthority('STUDENT')")
 	public StudentAnswer studentAnswer(@RequestBody StudentAnswer studentAnswer) {
-		return studentAnswerService.studentAnswer(studentAnswer);
+		return this.studentAnswerService.studentAnswer(studentAnswer);
 	}
 	
 	@GetMapping("/")
 	@PreAuthorize("hasAnyAuthority('ADMIN','TUTOR')")
 	public List<StudentAnswer> retriveStudentAns(@RequestParam(required = false) Long studentId,@RequestParam(required = false) Long courseId){
-		return studentAnswerService.retriveStudentAns(studentId,courseId);
+		return this.studentAnswerService.retriveStudentAns(studentId,courseId);
 	}
 }

@@ -24,14 +24,14 @@ public class QuestionService {
 		return questionRepository.save(question);
 	}
 
-	public List<QuestionDTO> displayQuestion(Long courseId) {
+	public List<QuestionDTO> displayQuestion(final Long courseId) {
 
-		List<QuestionDTO> listOfQuestion = new LinkedList<>();
+		final List<QuestionDTO> listOfQuestion = new LinkedList<>();
 
-		List<Question> question = questionRepository.findAllByCourseId(courseId);
+		final List<Question> question = questionRepository.findAllByCourseId(courseId);
 																					
 
-		Iterator<Question> questionIterator = question.iterator();
+		final Iterator<Question> questionIterator = question.iterator();
 
 		while (questionIterator.hasNext()) {
 			listOfQuestion.add(convertToDTO(questionIterator.next()));
@@ -39,18 +39,18 @@ public class QuestionService {
 		return listOfQuestion;
 	}
 
-	public List<QuestionDTO> pageConcept(int pageNo, int pageSize, String fieldName, Sort.Direction direction,
-			Long courseId) {
+	public List<QuestionDTO> pageConcept(final int pageNo, final int pageSize, final String fieldName, final Sort.Direction direction,
+			final Long courseId) {
 
-		Page<Question> response = questionRepository.findByCourseId(courseId,
+		final Page<Question> response = questionRepository.findByCourseId(courseId,
 				PageRequest.of(pageNo, pageSize, Sort.by(direction, fieldName)));
 
-		Page<QuestionDTO> responseDTO = response.map(this::convertToDTO);
+		final Page<QuestionDTO> responseDTO = response.map(this::convertToDTO);
 		return responseDTO.getContent();
 
 	}
 
-	public QuestionDTO convertToDTO(Question question) {
+	public QuestionDTO convertToDTO(final Question question) {
 
 		return QuestionDTO.builder().questionId(question.getId()).question(question.getQuestion())
 				.option1(question.getOption1()).option2(question.getOption2()).build();

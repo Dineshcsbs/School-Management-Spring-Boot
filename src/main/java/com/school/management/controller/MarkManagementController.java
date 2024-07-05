@@ -1,6 +1,5 @@
 package com.school.management.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +24,13 @@ public class MarkManagementController {
 	@PutMapping("/")
 	@PreAuthorize("hasAnyAuthority('ADMIN','TUTOR')")
 	public Map<String,String> studentMarkUpdated(){
-		 return markManagementService.studentMarkUpdated();
+		 return this.markManagementService.studentMarkUpdated();
 	}
 	
 	@GetMapping("/mark")
 	@PreAuthorize("hasAnyAuthority('ADMIN','TUTOR','STUDENT')")
-	public List<MarkManagement> retriveSingleRecord(@RequestParam Long studentId,@RequestParam Long courseId) {
-		return markManagementService.retriveSingleRecord(studentId, courseId);
+	public MarkManagement retriveSingleRecord(@RequestParam Long studentId,@RequestParam Long courseId) {
+		return this.markManagementService.retriveSingleRecord(studentId, courseId);
 	}
 	
 

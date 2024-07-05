@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.school.management.entities.Course;
+import com.school.management.exception.BadRequestServiceAlertException;
 import com.school.management.repository.CourseRepository;
 
 
@@ -17,22 +18,19 @@ public class CourseService {
 	@Autowired
 	private CourseRepository courseRepository;
 
-	public Course createRecord(Course course) {
+	public Course createRecord(final Course course) {
 
-		return courseRepository.save(course);
+		return this.courseRepository.save(course);
 	}
 
-	public Course getCourseName(Long id) {
-		try {
-			return courseRepository.findById(id)
-					.orElseThrow(() -> new RuntimeException("Course not found with id: " + id));
-		} catch (Exception e) {
-			throw new RuntimeException("Course not found with id: " + id);
-		}
+	public Course getCourseName(final Long id) {
+		return this.courseRepository.findById(id)
+					.orElseThrow(() -> new BadRequestServiceAlertException(400,"Course not found with id: " + id));
+		
 	}
 
-	public Map<String, Object> deleteByIdRecord(Long id) {
-		Map<String, Object> responce = new HashMap<>();
+	public Map<String, Object> deleteByIdRecord(final Long id) {
+		final Map<String, Object> responce = new HashMap<>();
 		if (courseRepository.existsById(id)) {
 			courseRepository.deleteById(id);
 			responce.put("Id Successfully Delete ", id);
